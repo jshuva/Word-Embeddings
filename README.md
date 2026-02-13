@@ -56,3 +56,21 @@ To evaluate how sensitive our matchmaking pipeline is to the choice of the under
 * Under the paraphrase model, my top three shifted to: **Mohammad Pakdoust, Mohamed Drira, and Md Musfiqur Rahman**.
 
 While Mohammad Pakdoust remained a top match across both models, the rest of my top matches changed completely. This reveals that while different embedding models agree on general similarities, the fine-grained rankings at the very top are highly sensitive to the specific model's architecture and training data. The choice of model undeniably alters the final matchmaking results.
+
+
+### Dimension Reduction Analysis
+
+When running the default UMAP algorithm with different random seeds, the resulting output changes noticeably every time. This visual instability occurs because UMAP is a stochastic algorithm designed to map complex, non-linear high-dimensional spaces (like our 384-dimensional sentence embeddings) down to just two dimensions. To achieve this, it relies on random initialization and local optimization. Because there is no single "perfect" way to flatten 384 dimensions without distortion, the algorithm often settles into different valid 2D layouts depending on the starting seed. This instability indicates that a single, untuned visualization might not be entirely reliable on its own.
+
+To ensure the 2D map faithfully reflects the true similarities between classmates, I used an Optuna optimization routine to tune the algorithm's hyperparameters. The objective was to maximize the average Spearman rank correlation between the actual high-dimensional cosine similarity and the flattened 2D Euclidean distance.
+
+The hyperparameter search yielded the following optimal configuration:
+
+* **`n_neighbors`:** 7
+* **`min_dist`:** 0.6859
+* **Best Average Rank Correlation:** 0.6057
+
+An average rank correlation of approximately 0.61 indicates a moderately strong positive relationship. This means the tuned UMAP implementation is highly adequate for our matchmaking purposes. While compressing 384 dimensions into a 2D plot inevitably results in some structural information loss (which is why the correlation isn't perfectly 1.0), a score of 0.6057 confirms that the tuned visualization reliably preserves the original high-dimensional rankings. Classmates plotted near each other on the tuned map genuinely share similar underlying interests.
+
+
+![Sample output of script](https://github.com/jshuva/Word-Embeddings/blob/dimension-reduction-analysis/visualization.png?raw=true)
