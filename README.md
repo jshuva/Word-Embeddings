@@ -12,14 +12,10 @@ Let’s look at my entry in the dataset: *"I enjoy reading books, hiking, and wa
 
 Now, let's look at a few of our classmates:
 
-* 
 **Mohamed Drira** wrote: *"I’m passionate about hiking, reading, meditation, movies, and embracing new challenges"*.
 
 
-* 
 **Bhavik Kantilal Bhagat** wrote: *"Chess, Maths and Music."*.
-
-
 
 Even though Mohamed and I didn't use the exact same phrasing, the embedding model understands that "watching documentaries" and "movies" are related concepts, and it sees that we both explicitly love "hiking" and "reading". Because the *meanings* of our sentences are similar, the computer assigns our sentences "GPS coordinates" that are right next to each other on the map.
 
