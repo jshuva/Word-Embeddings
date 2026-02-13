@@ -25,3 +25,20 @@ By translating text into these coordinate points, embeddings allow us to take un
 
 
 ![Sample output of script](https://github.com/jshuva/Word-Embeddings/blob/main/visualization.png?raw=true)
+
+
+### Data Analysis
+
+To understand how sensitive our embedding model is to dataset idiosyncrasies, I modified three sentences in `classmates.csv`.
+
+First, I made a major conceptual change to Somto Muotoe's entry, completely altering the core meaning of the sentence from the original hobbies from `I enjoy reading, cycling, playing chess, and story-based video games` to `I absolutely love devouring books, driving.`. For the other two entries—my own (Jayanta Sarker Shuva) and Krushi Mistry's—I made minor modifications by swapping single words with close synonyms (for example, changing "hiking" to "walking" or "cricket" to "football").
+
+I then generated new embeddings and compared them to the originals using cosine similarity. The results clearly highlight how the model interprets text:
+
+* **Somto Muotoe (Major Change):** 0.4756 similarity
+* **Jayanta Sarker Shuva (Minor Change):** 0.9564 similarity
+* **Krushi Mistry (Minor Change):** 0.9552 similarity
+
+The minor changes had a very small impact on the embeddings, keeping the similarity scores above 0.95. This occurs because the model successfully recognizes synonyms and contextual relationships; tweaking a single word barely shifts the overall meaning (or "GPS coordinate") of the sentence.
+
+In contrast, the major change to Somto's entry caused the similarity score to drop significantly to 0.4756. Because the semantic meaning was drastically altered, the model moved the entry to a completely different location in the high-dimensional space. This demonstrates that the model correctly prioritizes the underlying meaning of a sentence rather than just looking at superficial word counts.
