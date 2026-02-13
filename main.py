@@ -9,7 +9,7 @@ def main():
     df = pd.read_csv("classmates.csv", sep="\t", header=None, names=["Name", "Description"])
     
     # Generate Embeddings
-    model = SentenceTransformer('all-MiniLM-L6-v2')
+    model = SentenceTransformer('paraphrase-MiniLM-L6-v2') # Updated model
     embeddings = model.encode(df['Description'].tolist())
     
     # Save embeddings to JSON
